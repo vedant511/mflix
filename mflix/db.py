@@ -63,7 +63,8 @@ def get_movies_by_country(countries):
         # TODO: Projection
         # Find movies matching the "countries" list, but only return the title
         # and _id.
-        return list(db.movies.find())
+        result = list(db.movies.find({'countries': {'$in': countries}}, {'title': 1}))
+        return result
 
     except Exception as e:
         return e
@@ -179,7 +180,7 @@ def build_query_sort_project(filters):
 
             # TODO: Text and Subfield Search
             # Construct a query that will search for the chosen genre.
-            query = {}
+            query = {"genres": {"$in": filters["genres"]}}
 
     return query, sort, project
 
